@@ -4,7 +4,12 @@
       <h2>User info</h2>
       <table class='table'>
 	      <tr>
-	        <td><%= image_tag 'no_image.jpg' %></td>
+	        <td><% if @user.profile_image.attached? %>
+                <%= image_tag @user.profile_image.variant(resize_to_limit: [100,100]) %>
+              <% else %>
+                <%= image_tag 'no_image.jpg', size: "100x100" %>
+              <% end %>
+          </td>
         </tr>
         <tr>
           <th>name</th>
