@@ -1,32 +1,36 @@
-<%= form_with model: @book do |f| %>
-  <h4>Title</h4>
-  <%= f.text_field :title %>
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <%= render 'list', user: @user %>
+    </div>
 
-  <h4>Opinion</h4>
-  <%= f.text_area :body %>
+  <div class='col-md-8 offset-md-1'>
+    <h2>Book detail</h2>
 
-  <%= f.submit 'Create Book' %>
-<% end %>
-
-
-<h1>Book detail</h1>
-
-<table>
-  <tr>
-  <td><%= image_tag 'sample-author1.jpg' %></td>
-  <td><%= @book.title %></td>
-  <td><%= @book.body %></td>
-  <td><%= form_with url: edit_book_path(@book), method: :get, local: true do %>
-       <%= submit_tag "Edit" %></td>
+  <table class='table table-hover table-inverse'>
+    <tr>
+      <td><%= image_tag @book.user.get_profile_image(80,80) %></td>
+      <td><%= link_to @book.title, book_path(@book) %></td>
+      <td><%= @book.body %></td>
+      <% if @book.user == current_user %>
+      <td><%= form_with url: edit_book_path(@book), method: :get, local: true do |f| %>
+         <%= f.submit 'Edit', class:"btn btn-outline-secondary" %>
+        <% end %>
+      </td>
       <% end %>
-  <% if @book.user == current_user %>
-  <td><%= form_with url: book_path(@book), method: :delete %>
-    <%= submit_tag "Destroy" %></td>
-  <% end %>
-  </tr>
-</table>
+      <% if @book.user == current_user %>
+      <td><%= form_with url: book_path(@book), method: :delete do |f| %>
+        <%= f.submit 'Destroy', class:"btn btn-outline-secondary" %>
+          <% end %>
+      </td>
+      <% end %>
+    </tr>
+  </table>
 
-<p><%= @book.user.name %></p>
+<p><%= link_to @book.user.name, user_path(current_user) %></p>
+    </div>
+  </div>
+</div>
 
 
 

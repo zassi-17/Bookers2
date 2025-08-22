@@ -35,8 +35,9 @@
           <h4>Opinion</h4>
             <%= f.text_area :body %>
 
-        <%= f.submit 'Create Book' %>
-      <% end %>
+          <%= f.submit 'Create Book', class:"btn btn-outline-secondary" %>
+          
+        <% end %>
     </div>
 
     <div class='col-md-8 offset-md-1'>
@@ -45,6 +46,7 @@
       <table class='table table-hover table-inverse'>
 	      <thead>
 	        <tr>
+            <th></th>
             <th>Title</th>
             <th>Opinion</th>
           </tr>
@@ -52,6 +54,7 @@
           <tbody>
             <% @books.each do |book| %>
               <tr>
+                <td><%= image_tag @user.get_profile_image(80,80) %></td>
                 <td><span><%= link_to book.title, book_path(book) %></span></td>
                 <td><span><%= book.body %></span></td>
               </tr>
