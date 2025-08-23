@@ -4,6 +4,15 @@
 
 <%= form_with(model: @user, local: true) do |f| %>
   <h2>User info</h2>
+    
+    <% if @user.errors.any? %>
+      <%= @user.errors.count %>errors occurred.
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    <% end %>
 
   <div class="mb-3">
   <label for="inputName">Name</label>

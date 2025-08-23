@@ -22,7 +22,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
       if @user.update(user_params)
-        redirect_to @user, notice: 'ユーザー情報を更新しました。'
+        redirect_to @user
+        flash[:notice] = "Profile updated successfully."
       else
         render :edit
       end
@@ -38,7 +39,7 @@ private
   def ensure_correct_user
     user = User.find(params[:id])
     unless user == current_user
-      redirect_to user_path
+      redirect_to user_path(current_user)
     end
   end
 

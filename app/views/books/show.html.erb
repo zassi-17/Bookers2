@@ -1,6 +1,10 @@
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-3'>
+      <div>
+        <%= flash[:notice] %>
+      </div>
+      
       <%= render 'list', user: @user %>
     </div>
 
@@ -9,25 +13,24 @@
 
   <table class='table table-hover table-inverse'>
     <tr>
-      <td><%= image_tag @book.user.get_profile_image(80,80) %></td>
+      <td><%= link_to user_path(@book.user) do %>
+            <%= image_tag @book.user.get_profile_image(80,80) %>
+          <% end %>
+      </td>
       <td><%= link_to @book.title, book_path(@book) %></td>
       <td><%= @book.body %></td>
       <% if @book.user == current_user %>
-      <td><%= form_with url: edit_book_path(@book), method: :get, local: true do |f| %>
-         <%= f.submit 'Edit', class:"btn btn-outline-secondary" %>
-        <% end %>
+      <td><%= link_to 'Edit', edit_book_path(@book), class:"btn btn-outline-secondary" %>
       </td>
       <% end %>
       <% if @book.user == current_user %>
-      <td><%= form_with url: book_path(@book), method: :delete do |f| %>
-        <%= f.submit 'Destroy', class:"btn btn-outline-secondary" %>
-          <% end %>
+      <td><%= link_to 'Destroy', book_path(@book),  method: :delete, class:"btn btn-outline-secondary" %>
       </td>
       <% end %>
     </tr>
   </table>
 
-<p><%= link_to @book.user.name, user_path(current_user) %></p>
+<p><%= link_to @book.user.name, user_path(@book.user) %></p>
     </div>
   </div>
 </div>

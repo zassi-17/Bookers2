@@ -1,6 +1,10 @@
 <div class='container px-5 px-sm-0'>
 	<div class='row'>
 	  <div class='col-md-3'>
+      <div>
+        <%= flash[:notice] %>
+      </div>
+      
       <h2>User info</h2>
       <table class='table'>
 	      <tr>
@@ -54,7 +58,10 @@
           <tbody>
             <% @books.each do |book| %>
               <tr>
-                <td><%= image_tag @user.get_profile_image(80,80) %></td>
+                <td><%= link_to user_path(book.user) do %>
+                    <%= image_tag book.user.get_profile_image(80,80) %>
+                    <% end %>
+                  </td>
                 <td><span><%= link_to book.title, book_path(book) %></span></td>
                 <td><span><%= book.body %></span></td>
               </tr>

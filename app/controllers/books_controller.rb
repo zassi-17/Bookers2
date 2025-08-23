@@ -10,11 +10,11 @@ class BooksController < ApplicationController
     @new_book = Book.new(book_params)
     @new_book.user_id = current_user.id
     if @new_book.save
+      flash[:notice] = "successfully posted."
       redirect_to book_path(@new_book.id)
     else
-       @books = Book.includes(:user).all
-       @user = current_user
-       flash[:notice] = "errors occurred"
+      @books = Book.includes(:user).all
+      @user = current_user
       render :index
     end
   end
@@ -38,8 +38,12 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    @book.update(book_params)
-    redirect_to book_path(@book.id)
+    if @book.update(book_params)
+      flash[:notice] = "successfully updated the post."
+       redirect_to book_path(@book.id)
+    else
+      render :edit
+    end
   end
 
   def destroy
